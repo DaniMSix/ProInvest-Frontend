@@ -1,0 +1,144 @@
+﻿@model InversionViewModel
+@{
+    ViewData["Title"] = "ProInvest Latinoamérica";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <script defer src="~/js/simulacion.js"></script>
+    <link rel="stylesheet" href="~/css/GraficaSimulacion.css" asp-append-version="true" />
+</head>
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col h-100">
+            <img src="~/images/ahorro.jpg " class="img-fluid" alt="Imagen de inversión">
+        </div>
+        <div class="col">
+            <div class="card text-center">
+                <h5 class="card-header">Una inversión segura</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Puedes realizar una simulación de tu inversión a partir de $10,000</h5>
+                    <div class="form-group">
+                        <label class="form-label" for="typeNumber">Cantidad a invertir:</label>
+                        <input type="number" id="typeNumber" class="form-control" min="10000" max="999999999" maxlength="15" />
+                    </div>
+                    <a href="#SimuladorInversion" class="btn btn-primary">Simular</a>
+                </div>
+             </div>
+        </div>
+    </div>
+    <section id="SimuladorInversion">
+        <div class="row d-flex align-items-center">
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.Error
+                </div>
+            }
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <form id="formulario-simulacion" for="click">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="card mx-auto mt-3" style="max-width: 500px;">
+                    <div class="card-header text-center fs-4">
+                        Simula tu inversión
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label asp-for="Importe" class="form-label"></label>
+                            <input asp-for="Importe" class="form-control" id="importe">
+                            <span asp-validation-for="Importe" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="TipoInversion" class="form-label"></label>
+                            <select id="tiposInversion" asp-for="TipoInversion" class="form-select">
+                                <option value="">Seleccione un valor para este campo</option>
+                                    @if(ViewBag.TiposInversionList != null)
+                                    {
+                                        foreach (var tipo in ViewBag.TiposInversionList)
+                                        {
+                                            <option value="@tipo.Value" data-rendimiento="@tipo.Value">@tipo.Text</option>
+                                        }       
+                                    }
+                            </select>
+                            <span asp-validation-for="TipoInversion" class="text-danger"></span>
+                        </div>
+                        <div class="contenedor-slider">
+                            <label asp-for="Plazo" class="form-label"></label>
+                            <input asp-for="Plazo" type="range" min="1" max="5" value="1" class="slider" id="sliderSimulador">
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <button class="btn btn-primary" id="btnMostrarGrafica">Simular inversión</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="container-chart">
+                <div class="chart" id="chartSimulacion"></div>
+                <a href="../Formulario/DatosPersonales" class="btn btn-primary" id="btnInvertir">Invertir ahora</a>
+            </div>
+        </div>
+    </div>
+    </section>
+    <section id="CompararInversion">
+        <div class="row d-flex align-items-center">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <form id="formulario-comparacion" for="click">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="card mx-auto mt-3" style="max-width: 500px;">
+                        <div class="card-header text-center fs-4">
+                            Compara tu inversión
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label asp-for="Importe" class="form-label"></label>
+                                <input asp-for="Importe" class="form-control" id="importeComparacion">
+                                <span asp-validation-for="Importe" class="text-danger"></span>
+                            </div>
+                            <div id="tiposDropdown">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        Tipos de Inversión
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @if (ViewBag.TiposInversionList != null)
+                                        {
+                                            foreach (var tipo in ViewBag.TiposInversionList)
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="@tipo.Value" id="@tipo.Text" />
+                                                            <label class="form-check-label" for="@tipo.Text">@tipo.Text</label>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="contenedor-slider">
+                                <label asp-for="Plazo" class="form-label"></label>
+                                <input asp-for="Plazo" type="range" min="1" max="5" value="1" class="slider" id="sliderComparacion">
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary" id="btnMostrarGraficaComparacion">Compara tu inversión</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="container-chart">
+                    <div class="chart" id="chartComparacion"></div>
+                    <a href="../Formulario/DatosPersonales" class="btn btn-primary" id="btnInvertir">Invertir ahora</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

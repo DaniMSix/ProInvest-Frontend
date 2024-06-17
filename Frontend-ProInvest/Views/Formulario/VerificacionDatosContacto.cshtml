@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Verificacion Datos de Contacto";
+}
+
+<div class="row justify-content-md-center">
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+    @if (ViewBag.Exito != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewBag.Exito
+        </div>
+    }
+    <div class="col-md-6">
+        <h3 class="text-center">Confirmación de correo electrónico</h3>
+        <p class="text-center">Es necesario confirmar tu cuenta para seguir con tu registro. Se te ha enviado un correo electrónico con una liga para verificarlo.</p>
+        @if (ViewBag.CorreoVerificacio != true)
+        {
+            <form asp-action="CorreoVerificado">
+                <h6 class="text-center">¿Ya has confirmado tu correo electrónico? Continúa con tu solicitud</h6>
+                <div class="text-center mt-3">
+                    <input type="submit" name="BtnContinuar" value="Continuar" class="btn btn-primary" />
+                </div>
+            </form>
+        }
+        <div class="row text-center mt-3">
+            <form asp-action="EnviarCorreo">
+                <div>
+                    <p><small>¿No ves el correo electrónico?</small></p>
+                    <input type="submit" name="BtnSendEmail" value="Enviar correo" class="btn btn-link btn-sm" />
+                </div>
+            </form>
+        </div>
+        
+    </div>
+</div>

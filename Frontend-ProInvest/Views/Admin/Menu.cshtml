@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "Menu administradores";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";  
+}
+
+<h2 class="text-center mb-4"> ¿Qué deseas hacer?</h2>
+
+<div class="row align-items-center row-cols-1 row-cols-md-2 g-4 text-center justify-content-md-center">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Revisar solicitudes de inversión</h5>
+                <p class="card-text">Acceso a las multiples solicitudes de inversión de los usuarios, para obtener toda la información correspondiente y documentos.</p>
+            </div>
+            <a asp-action="SolicitudesInversiones" asp-controller="admin" class="btn btn-primary">Ir allá</a>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Gestionar tipos de inversión</h5>
+                <p class="card-text">Acceso a la administración de los tipos de inversión, teniendo la posibilidad de agregarlos, editarlos o eliminarlos según sea correspondiente.</p>
+            </div>
+            <a asp-action="AdministrarTiposDeInversion" asp-controller="admin" class="btn btn-primary">Ir allá</a>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Gestionar origenes de inversión</h5>
+                <p class="card-text">Acceso a la administración de los origenes de inversión, teniendo la posibilidad de agregarlos, editarlos o eliminarlos según sea correspondiente.</p>
+            </div>
+            <a href="origenesInversion" class="btn btn-primary">Ir allá</a>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Gestionar bancos</h5>
+                <p class="card-text">Acceso a la administración de los bancos, teniendo la posibilidad de agregarlos, editarlos o eliminarlos según sea correspondiente..</p>
+            </div>
+            <a href="bancos" class="btn btn-primary">Ir allá</a>
+        </div>
+    </div>
+    <div class="col align-self-center">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Gestionar lista de documentos</h5>
+                <p class="card-text">Acceso a la administración de la lista de documentos, teniendo la posibilidad de agregarlos, editarlos o eliminarlos según sea correspondiente..</p>
+            </div>
+            <a href="listaDocumentos" class="btn btn-primary">Ir allá</a>
+        </div>
+    </div>
+</div>
